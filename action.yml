@@ -14,7 +14,7 @@ inputs:
   audience:
     description: 'OIDC audience to request'
     required: false
-    default: 'api.nuget.org'
+    default: 'https://www.nuget.org'
 
 outputs:
   NUGET_API_KEY:
