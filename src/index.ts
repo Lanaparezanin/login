@@ -3,9 +3,9 @@ import * as httpm from '@actions/http-client';
 
 async function run(): Promise<void> {
     try {
-        const username: string = core.getInput('user', { required: true });
-        const tokenServiceUrl: string = core.getInput('token-service-url', { required: true });
-        const audience: string = core.getInput('audience') || 'api.nuget.org';
+        const nugetUsername: string = core.getInput('user', { required: true });
+        const nugetTokenServiceUrl: string = core.getInput('token-service-url', { required: true });
+        const nugetAudience: string = core.getInput('audience') || 'https://www.nuget.org';
 
         // Get OIDC environment values
         const oidcRequestToken: string | undefined = process.env['ACTIONS_ID_TOKEN_REQUEST_TOKEN'];
@@ -15,7 +15,7 @@ async function run(): Promise<void> {
             throw new Error('Missing GitHub OIDC request environment variables.');
         }
 
-        const tokenUrl: string = `${oidcRequestUrl}&audience=${encodeURIComponent(audience)}`;
+        const tokenUrl: string = `${oidcRequestUrl}&audience=${encodeURIComponent(nugetAudience)}`;
         core.info(`Requesting GitHub OIDC token from: ${tokenUrl}`);
 
         const http: httpm.HttpClient = new httpm.HttpClient();
@@ -31,7 +31,7 @@ async function run(): Promise<void> {
 
         // Build the request body
         const body: string = JSON.stringify({
-            username: username,
+            username: nugetUsername,
             tokenType: 'ApiKey'
         });
 
@@ -43,7 +43,7 @@ async function run(): Promise<void> {
         };
 
         const tokenServiceHttpClient: httpm.HttpClient = new httpm.HttpClient();
-        const response: httpm.HttpClientResponse = await tokenServiceHttpClient.post(tokenServiceUrl, body, headers);
+        const response: httpm.HttpClientResponse = await tokenServiceHttpClient.post(nugetTokenServiceUrl, body, headers);
 
         if (response.message.statusCode !== 200) {
             const errorBody = await response.readBody();
