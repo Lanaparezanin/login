@@ -1,4 +1,4 @@
-# NuGet Login (OIDC) · ![build](https://github.com/Lanaparezanin/login/actions/workflows/test.yml/badge.svg)
+# NuGet Login (OIDC)
 
 This GitHub Action enables secure, passwordless authentication to NuGet servers using OpenID Connect (OIDC). It obtains a short-lived NuGet API key by exchanging the GitHub OIDC token with your NuGet-compatible token service.
 
