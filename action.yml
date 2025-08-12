@@ -7,7 +7,8 @@ inputs:
     required: true
   token-service-url:
     description: 'Token exchange endpoint URL'
-    required: true
+    required: false
+    default: 'https://www.nuget.org/api/v2/token'
   audience:
     description: 'OIDC audience to request'
     required: false

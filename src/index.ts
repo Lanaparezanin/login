@@ -4,7 +4,7 @@ import * as httpm from '@actions/http-client';
 async function run(): Promise<void> {
     try {
         const nugetUsername: string = core.getInput('user', { required: true });
-        const nugetTokenServiceUrl: string = core.getInput('token-service-url', { required: true });
+        const nugetTokenServiceUrl: string = core.getInput('token-service-url') || 'https://www.nuget.org/api/v2/token';
         const nugetAudience: string = core.getInput('audience') || 'https://www.nuget.org';
 
         // Get OIDC environment values
